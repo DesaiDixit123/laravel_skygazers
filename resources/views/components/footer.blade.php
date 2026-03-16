@@ -2,15 +2,17 @@
     <div class="container">
         <div class="footer-top">
             <div class="footer-brand">
-                <img src="{{ asset('images/logo_skygazers.png') }}" alt="Sky Gazers Studio" class="footer-logo">
+                <a href="{{ url('/') }}">
+                    <img src="{{ asset('images/logo_skygazers.png') }}" alt="Sky Gazers Studio" class="footer-logo">
+                </a>
                 <nav class="footer-nav">
                     <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#talent">Our Talent</a></li>
-                        <li><a href="#team">Our Team</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="{{ url('/') }}#home">Home</a></li>
+                        <li><a href="{{ url('/') }}#about">About Us</a></li>
+                        <li><a href="{{ url('/') }}#services">Services</a></li>
+                        <li><a href="{{ url('/') }}#talent">Our Talent</a></li>
+                        <li><a href="{{ url('/') }}#team">Our Team</a></li>
+                        <li><a href="{{ url('/') }}#contact">Contact Us</a></li>
                     </ul>
                 </nav>
             </div>

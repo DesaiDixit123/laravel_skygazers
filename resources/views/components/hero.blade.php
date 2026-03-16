@@ -1,4 +1,4 @@
-<section class="hero-section">
+<section id="home" class="hero-section">
     <div class="hero-background" style="background-image: url('{{ asset('images/skygazers_hero_bg.png') }}');"></div>
     <div class="hero-overlay"></div>
     

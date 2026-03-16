@@ -4,18 +4,20 @@
     
     <div class="sidebar-content">
         <div class="logo-container">
-            <img src="{{ asset('images/logo_skygazers.png') }}" alt="Sky Gazers Studio" class="sidebar-logo">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('images/logo_skygazers.png') }}" alt="Sky Gazers Studio" class="sidebar-logo">
+            </a>
         </div>
 
         <nav class="sidebar-nav">
             <ul>
-                <li><a href="{{ url('/') }}#home" class="{{ Request::is('/') ? 'active' : '' }}">Home</a></li>
-                <li><a href="{{ url('/') }}#about">About Us</a></li>
-                <li><a href="{{ url('/') }}#services">Services</a></li>
-                <li><a href="{{ url('/') }}#talent">Our Talent</a></li>
-                <li><a href="{{ url('/become-a-model') }}" class="{{ Request::is('become-a-model') ? 'active' : '' }}">Become a Model</a></li>
-                <li><a href="{{ url('/') }}#team">Our Team</a></li>
-                <li><a href="{{ url('/') }}#contact">Contact Us</a></li>
+                <li><a href="{{ url('/') }}#home" class="nav-link">Home</a></li>
+                <li><a href="{{ url('/') }}#about" class="nav-link">About Us</a></li>
+                <li><a href="{{ url('/') }}#services" class="nav-link">Services</a></li>
+                <li><a href="{{ url('/') }}#talent" class="nav-link">Our Talent</a></li>
+                <li><a href="{{ url('/become-a-model') }}" class="nav-link {{ Request::is('become-a-model') ? 'active' : '' }}">Become a Model</a></li>
+                <li><a href="{{ url('/') }}#team" class="nav-link">Our Team</a></li>
+                <li><a href="{{ url('/') }}#contact" class="nav-link">Contact Us</a></li>
             </ul>
         </nav>
 
@@ -23,7 +25,7 @@
             <div class="social-links">
                 <a href="#"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
+               
             </div>
             <p class="copyright">&copy; 2026 Sky Gazers Studio</p>
         </div>
@@ -33,7 +35,9 @@
 <!-- Mobile Header / Branding Bar -->
 <div class="mobile-header">
     <div class="mobile-logo">
-        <img src="{{ asset('images/logo_skygazers.png') }}" alt="Sky Gazers Studio">
+        <a href="{{ url('/') }}">
+            <img src="{{ asset('images/logo_skygazers.png') }}" alt="Sky Gazers Studio">
+        </a>
     </div>
     <button id="mobile-toggle" class="mobile-toggle">
         <div class="dots-icon">
@@ -141,12 +145,13 @@
         transition: width 0.3s ease;
     }
 
-    .sidebar-nav a:hover, .sidebar-nav a.active {
-        color: #ffffff;
+    .sidebar-nav a:hover, .sidebar-nav a.active, .sidebar-nav a.current-section {
+        color: #ffffff !important;
     }
 
-    .sidebar-nav a:hover::after, .sidebar-nav a.active::after {
+    .sidebar-nav a:hover::after, .sidebar-nav a.active::after, .sidebar-nav a.current-section::after {
         width: 100%;
+        background-color: #ffffff;
     }
 
     .sidebar-footer {
@@ -287,5 +292,63 @@
             toggle.addEventListener('click', toggleSidebar);
             backdrop.addEventListener('click', toggleSidebar);
         }
+
+        // Handle active state for anchor links on homepage
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        function updateActiveSection() {
+            if (window.location.pathname !== '/') return;
+
+            let currentSectionId = '';
+            const scrollPos = window.scrollY + 150; // Offset for better detection
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+
+                // Increased offset and refined logic for better detection
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('current-section');
+                const href = link.getAttribute('href');
+                if (currentSectionId && href && href.endsWith('#' + currentSectionId)) {
+                    link.classList.add('current-section');
+                }
+            });
+            
+            // Default to Home if at the very top or if no section is active
+            if (window.scrollY < 200 || !currentSectionId) {
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && href.endsWith('#home')) {
+                        link.classList.remove('current-section'); // Avoid duplicates
+                        link.classList.add('current-section');
+                    } else if (href && href.includes('#')) {
+                        link.classList.remove('current-section');
+                    }
+                });
+            }
+        }
+
+        if (window.location.pathname === '/') {
+            window.addEventListener('scroll', updateActiveSection);
+            window.addEventListener('load', updateActiveSection);
+        }
+
+        // Update active class on click for immediate feedback
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (this.getAttribute('href').includes('#')) {
+                    navLinks.forEach(l => l.classList.remove('current-section'));
+                    this.classList.add('current-section');
+                    if (window.innerWidth <= 1024) toggleSidebar();
+                }
+            });
+        });
     });
 </script>

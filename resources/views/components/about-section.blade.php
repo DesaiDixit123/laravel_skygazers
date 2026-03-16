@@ -7,7 +7,7 @@
                     <p>Sky Gazers Studio is a global creative and influencer collaboration studio founded in 2020. We specialize in content creation, brand collaborations, and influencer partnerships across multiple international markets.</p>
                     <p>Our studio connects brands with talented creators to produce authentic digital content that drives engagement and builds strong brand presence globally. We specialize in influencer collaborations, brand shoots, user-generated content (UGC), and creator partnerships across India, Brazil, UK, Australia, Germany, France, Portugal, and Slovenia.</p>
                 </div>
-                <a href="#talent" class="btn-view-models">Our Talent Network</a>
+                <a href="{{ url('/') }}#talent" class="btn-view-models">Our Talent Network</a>
             </div>
             
             <div class="about-image-container">
