@@ -36,8 +36,8 @@
         <div class="models-grid">
 
             @foreach($talents as $talent)
-                <a href="{{ url('/talent/' . strtolower(str_replace(' ', '-', $talent->name))) }}" class="model-card-link">
-                    <div class="model-card" data-category="{{ $talent->category }}">
+                <a href="{{ url('/talent/' . strtolower(str_replace(' ', '-', $talent->name))) }}" class="model-card-link" data-category="{{ $talent->category }}">
+                    <div class="model-card">
                         <div class="model-image-wrapper">
                         @if($talent->image)
                             <img src="{{ Storage::url($talent->image) }}" alt="{{ $talent->name }}">
@@ -286,7 +286,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const modelCards = document.querySelectorAll('.model-card');
+        const modelCards = document.querySelectorAll('.model-card-link');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
