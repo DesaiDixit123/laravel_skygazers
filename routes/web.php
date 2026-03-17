@@ -15,6 +15,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ModelApplicationController;
 use App\Http\Controllers\Admin\ModelApplicationController as AdminModelApplicationController;
+use App\Http\Controllers\Admin\ExportController;
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/talent/{name}', [FrontendController::class, 'talentDetails'])->name('talent.details');
@@ -58,5 +59,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('model-applications', AdminModelApplicationController::class, ['as' => 'admin'])->only(['index', 'show', 'destroy']);
         
         Route::resource('content', SiteContentController::class, ['as' => 'admin']);
+        
+        Route::get('export/{resource}/{format}', [ExportController::class, 'export'])->name('admin.export');
     });
 });

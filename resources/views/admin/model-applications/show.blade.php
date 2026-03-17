@@ -13,6 +13,28 @@
     </div>
 </div>
 
+@if($application->photos && count($application->photos) > 0)
+<div class="card mb-4">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <span>Application Photos</span>
+        <span class="badge bg-secondary">{{ count($application->photos) }} Photos Uploaded</span>
+    </div>
+    <div class="card-body">
+        <div class="row g-3">
+            @foreach($application->photos as $photo)
+            <div class="col-md-3">
+                <div class="border rounded overflow-hidden shadow-sm h-100">
+                    <a href="{{ Storage::url($photo) }}" target="_blank">
+                        <img src="{{ Storage::url($photo) }}" class="img-fluid w-100" style="height: 250px; object-fit: cover;" alt="Application Photo">
+                    </a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+@endif
+
 <div class="row">
     <div class="col-md-6">
         <div class="card mb-4">
@@ -86,7 +108,7 @@
             <div class="card-body">
                 <table class="table table-borderless">
                     <tr>
-                        <th width="150">Referral Code</th>
+                        <th width="150">Referral</th>
                         <td>{{ $application->affiliate_code ?? 'None' }}</td>
                     </tr>
                     <tr>

@@ -8,7 +8,7 @@
 
             <div id="application-status" class="application-toast d-none"></div>
 
-            <form action="{{ route('model-application.store') }}" method="POST" class="application-form" id="become-model-form">
+            <form action="{{ route('model-application.store') }}" method="POST" class="application-form" id="become-model-form" enctype="multipart/form-data">
                 @csrf
                 <!-- Core Application Info -->
                 <div class="form-section">
@@ -89,8 +89,85 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="affiliate">Referral / Affiliate Code</label>
-                        <input type="text" id="affiliate" name="affiliate_code" placeholder="Enter code if any">
+                        <label for="affiliate">Referral</label>
+                        <input type="text" id="affiliate" name="affiliate_code" placeholder="Enter name if any">
+                    </div>
+                </div>
+
+                <!-- Photo Uploads -->
+                <div class="form-section full-width">
+                    <h2 class="section-title">PHOTO UPLOAD GUIDELINES</h2>
+                    
+                    <div class="guidelines-container mb-5">
+                        <div class="guidelines-grid">
+                            <div class="guideline-item">
+                                <div class="guideline-img-wrapper">
+                                    <img src="{{ asset('images/guidelines/headshot.png') }}" alt="Head Shot Guideline" class="guideline-img">
+                                </div>
+                                <span class="guideline-label">Head Shot</span>
+                            </div>
+                            <div class="guideline-item">
+                                <div class="guideline-img-wrapper">
+                                    <img src="{{ asset('images/guidelines/fullshot.png') }}" alt="Full Shot Guideline" class="guideline-img">
+                                </div>
+                                <span class="guideline-label">Full Shot</span>
+                            </div>
+                            <div class="guideline-item">
+                                <div class="guideline-img-wrapper">
+                                    <img src="{{ asset('images/guidelines/sideshot.png') }}" alt="Side Shot Guideline" class="guideline-img">
+                                </div>
+                                <span class="guideline-label">Side Shot</span>
+                            </div>
+                            <div class="guideline-item">
+                                <div class="guideline-img-wrapper">
+                                    <img src="{{ asset('images/guidelines/smileshot.png') }}" alt="Smile Shot Guideline" class="guideline-img">
+                                </div>
+                                <span class="guideline-label">Smile Shot</span>
+                            </div>
+                        </div>
+                        <div class="guideline-text text-center mt-4">
+                            <p class="highlight-text">Please upload your photos exactly in the formats shown above</p>
+                            <p class="section-subtitle text-muted small">Professionalism and clarity are key for your application approval.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="photo-upload-grid">
+                        <div class="photo-slot">
+                            <label class="photo-label">
+                                <input type="file" name="photos[]" class="photo-input" accept="image/*" required>
+                                <div class="photo-preview-placeholder">
+                                    <i class="fas fa-camera mb-2"></i>
+                                    <span>Head Shot</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="photo-slot">
+                            <label class="photo-label">
+                                <input type="file" name="photos[]" class="photo-input" accept="image/*" required>
+                                <div class="photo-preview-placeholder">
+                                    <i class="fas fa-camera mb-2"></i>
+                                    <span>Full Shot</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="photo-slot">
+                            <label class="photo-label">
+                                <input type="file" name="photos[]" class="photo-input" accept="image/*" required>
+                                <div class="photo-preview-placeholder">
+                                    <i class="fas fa-camera mb-2"></i>
+                                    <span>Side Shot</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="photo-slot">
+                            <label class="photo-label">
+                                <input type="file" name="photos[]" class="photo-input" accept="image/*" required>
+                                <div class="photo-preview-placeholder">
+                                    <i class="fas fa-camera mb-2"></i>
+                                    <span>Smile Shot</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -454,6 +531,128 @@
             letter-spacing: 0.5px;
         }
 
+        /* Photo Upload Styling */
+        .photo-upload-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .photo-slot {
+            aspect-ratio: 3/4;
+            background-color: rgba(255,255,255,0.03);
+            border: 2px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .photo-slot:hover {
+            border-color: rgba(255,255,255,0.3);
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .photo-label {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        .photo-input {
+            display: none;
+        }
+
+        .photo-preview-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .photo-preview-placeholder i {
+            font-size: 24px;
+        }
+
+        .photo-preview-placeholder span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .photo-slot.has-image {
+            border-style: solid;
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .photo-slot.has-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .guidelines-container {
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .guidelines-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .guideline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .guideline-img-wrapper {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .guideline-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .guideline-item:hover .guideline-img {
+            transform: scale(1.05);
+        }
+
+        .guideline-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .highlight-text {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
         @media (max-width: 1200px) {
             .form-section {
                 grid-template-columns: repeat(2, 1fr);
@@ -518,11 +717,12 @@
         
         fetch(form.action, {
             method: 'POST',
+            body: formData,
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
                 'Accept': 'application/json'
-            },
-            body: formData
+                // Content-Type is handled automatically by FormData for multipart
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -530,6 +730,15 @@
                 status.classList.add('alert', 'alert-success');
                 status.textContent = data.message;
                 form.reset();
+                
+                // Clear photo previews
+                document.querySelectorAll('.photo-slot').forEach(slot => {
+                    slot.classList.remove('has-image');
+                    const img = slot.querySelector('img');
+                    if (img) img.remove();
+                    const placeholder = slot.querySelector('.photo-preview-placeholder');
+                    if (placeholder) placeholder.style.display = 'flex';
+                });
                 
                 // Auto-hide status after 1 second
                 window.statusTimeout = setTimeout(() => {
@@ -552,6 +761,31 @@
         .finally(() => {
             btn.disabled = false;
             btn.textContent = originalBtnText;
+        });
+    });
+
+    // Preview uploaded photos
+    document.querySelectorAll('.photo-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const slot = this.closest('.photo-slot');
+            const placeholder = slot.querySelector('.photo-preview-placeholder');
+            
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const label = slot.querySelector('.photo-label');
+                    // Remove existing img if any
+                    const existingImg = label.querySelector('img');
+                    if (existingImg) existingImg.remove();
+                    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    label.appendChild(img);
+                    slot.classList.add('has-image');
+                    placeholder.style.display = 'none';
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
         });
     });
     </script>

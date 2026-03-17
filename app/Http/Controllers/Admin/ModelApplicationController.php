@@ -22,6 +22,7 @@ class ModelApplicationController extends Controller
                   ->orWhere('email', 'like', "%{$search}%")
                   ->orWhere('country', 'like', "%{$search}%")
                   ->orWhere('instagram', 'like', "%{$search}%")
+                  ->orWhere('affiliate_code', 'like', "%{$search}%")
                   ->orWhere('whatsapp_number', 'like', "%{$search}%");
             });
         }

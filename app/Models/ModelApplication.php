@@ -18,6 +18,11 @@ class ModelApplication extends Model
         'instagram',
         'telegram',
         'whatsapp_number',
+        'photos',
         'status'
+    ];
+
+    protected $casts = [
+        'photos' => 'array',
     ];
 }

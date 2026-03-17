@@ -3,6 +3,14 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h3 class="mb-0">Contact Messages</h3>
+    <div class="btn-group">
+        <a href="{{ route('admin.export', ['resource' => 'contact-messages', 'format' => 'excel'] + request()->query()) }}" class="btn btn-outline-success">
+            <i class="fas fa-file-excel me-1"></i> Excel
+        </a>
+        <a href="{{ route('admin.export', ['resource' => 'contact-messages', 'format' => 'pdf'] + request()->query()) }}" class="btn btn-outline-danger">
+            <i class="fas fa-file-pdf me-1"></i> PDF
+        </a>
+    </div>
 </div>
 
 <div class="card shadow-sm border-0">

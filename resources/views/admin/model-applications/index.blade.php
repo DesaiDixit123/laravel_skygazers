@@ -11,6 +11,14 @@
                 <a href="{{ route('admin.model-applications.index') }}" class="btn btn-outline-danger"><i class="fas fa-times"></i></a>
             @endif
         </form>
+        <div class="btn-group">
+            <a href="{{ route('admin.export', ['resource' => 'model-applications', 'format' => 'excel'] + request()->query()) }}" class="btn btn-outline-success" title="Export to Excel">
+                <i class="fas fa-file-excel"></i>
+            </a>
+            <a href="{{ route('admin.export', ['resource' => 'model-applications', 'format' => 'pdf'] + request()->query()) }}" class="btn btn-outline-danger" title="Export to PDF">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+        </div>
     </div>
 </div>
 
@@ -24,6 +32,7 @@
                         <th>Email</th>
                         <th>Country</th>
                         <th>Age</th>
+                        <th>Referral</th>
                         <th>Status</th>
                         <th>Applied On</th>
                         <th class="text-end">Actions</th>
@@ -36,6 +45,7 @@
                         <td class="align-middle">{{ $app->email }}</td>
                         <td class="align-middle">{{ ucfirst($app->country) }}</td>
                         <td class="align-middle">{{ $app->age }}</td>
+                        <td class="align-middle">{{ $app->affiliate_code ?? 'None' }}</td>
                         <td class="align-middle">
                             <span class="badge bg-{{ $app->status === 'pending' ? 'warning' : ($app->status === 'approved' ? 'success' : 'danger') }}">
                                 {{ ucfirst($app->status) }}

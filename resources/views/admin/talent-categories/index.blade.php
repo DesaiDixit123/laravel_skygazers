@@ -16,6 +16,14 @@
                 <a href="{{ route('admin.talent-categories.index') }}" class="btn btn-outline-danger"><i class="fas fa-times"></i></a>
             @endif
         </form>
+        <div class="btn-group">
+            <a href="{{ route('admin.export', ['resource' => 'talent-categories', 'format' => 'excel'] + request()->query()) }}" class="btn btn-outline-success" title="Export Excel">
+                <i class="fas fa-file-excel"></i>
+            </a>
+            <a href="{{ route('admin.export', ['resource' => 'talent-categories', 'format' => 'pdf'] + request()->query()) }}" class="btn btn-outline-danger" title="Export PDF">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+        </div>
         <a href="{{ route('admin.talent-categories.create') }}" class="btn btn-dark text-nowrap"><i class="fas fa-plus"></i> Add New Category</a>
     </div>
 </div>

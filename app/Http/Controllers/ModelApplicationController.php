@@ -21,17 +21,30 @@ class ModelApplicationController extends Controller
             'instagram' => 'required|string',
             'telegram' => 'required|string',
             'whatsapp_number' => 'required|string',
+            'photos' => 'required|array|min:1|max:4',
+            'photos.*' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        ModelApplication::create($validated);
+        $photoPaths = [];
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('model_applications', 'public');
+                $photoPaths[] = $path;
+            }
+        }
+
+        $applicationData = $validated;
+        $applicationData['photos'] = $photoPaths;
+
+        ModelApplication::create($applicationData);
 
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Your application has been submitted successfully!'
+                'message' => 'Your application with photos has been submitted successfully!'
             ]);
         }
 
-        return back()->with('success', 'Your application has been submitted successfully!');
+        return back()->with('success', 'Your application with photos has been submitted successfully!');
     }
 }
