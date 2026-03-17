@@ -16,10 +16,10 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         AdminUser::firstOrCreate(
-            ['email' => 'admin@admin.com'],
+            ['email' => 'admin@skygazers.in'],
             [
                 'name' => 'Administrator',
-                'password' => Hash::make('password')
+                'password' => Hash::make('Moin@sana777')
             ]
         );
     }
