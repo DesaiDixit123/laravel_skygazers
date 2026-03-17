@@ -20,7 +20,9 @@
             </div>
             
             <div class="contact-form-container">
-                <form action="#" class="contact-form">
+                <form id="contact-form" action="{{ route('contact.store') }}" method="POST" class="contact-form">
+                    @csrf
+                    <div id="contact-status" class="mb-3 d-none"></div>
                     <div class="form-row">
                         <div class="form-group">
                             <input type="text" name="first_name" placeholder="First Name" required>
@@ -170,4 +172,85 @@
             padding: 30px 20px;
         }
     }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
 </style>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const form = this;
+    const btn = form.querySelector('.btn-send');
+    const status = document.getElementById('contact-status');
+    const originalBtnText = btn.textContent;
+    
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    
+    const formData = new FormData(form);
+    
+    fetch(form.action, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Clear any previous dismissal timeout if it exists
+        if (window.statusTimeout) clearTimeout(window.statusTimeout);
+        if (window.hideTimeout) clearTimeout(window.hideTimeout);
+
+        status.style.transition = "none";
+        status.style.opacity = "1";
+        status.classList.remove('d-none', 'alert-danger', 'alert-success');
+        
+        if (data.success) {
+            status.classList.add('alert', 'alert-success');
+            status.textContent = data.message;
+            form.reset();
+            
+            // Auto-hide status after 1 second
+            window.statusTimeout = setTimeout(() => {
+                status.style.transition = "opacity 0.4s ease";
+                status.style.opacity = "0";
+                window.hideTimeout = setTimeout(() => {
+                    status.classList.add('d-none');
+                }, 400);
+            }, 1000);
+        } else {
+            status.classList.add('alert', 'alert-danger');
+            status.textContent = 'Something went wrong. Please try again.';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        status.classList.remove('d-none', 'alert-success');
+        status.classList.add('alert', 'alert-danger');
+        status.textContent = 'An error occurred. Please try again.';
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.textContent = originalBtnText;
+    });
+});
+</script>

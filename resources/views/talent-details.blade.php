@@ -2,44 +2,63 @@
     <div class="talent-details-page">
         <div class="container">
             <div class="gallery-grid">
-                <div class="gallery-item large">
-                    <img src="{{ asset('images/creator_1.png') }}" alt="Talent Large">
-                </div>
-                <div class="gallery-item">
-                    <img src="{{ asset('images/creator_2.png') }}" alt="Talent 2">
-                </div>
-                <div class="gallery-item">
-                    <img src="{{ asset('images/creator_3.png') }}" alt="Talent 3">
-                </div>
-                <div class="gallery-item">
-                    <img src="{{ asset('images/creator_4.png') }}" alt="Talent 4">
-                </div>
+                @if($talent->image)
+                    <div class="gallery-item large">
+                        <img src="{{ Storage::url($talent->image) }}" alt="{{ $talent->name }}">
+                    </div>
+                @endif
+                
+                @foreach($talent->images as $img)
+                    <div class="gallery-item">
+                        <img src="{{ Storage::url($img->image_path) }}" alt="{{ $talent->name }} Gallery">
+                    </div>
+                @endforeach
+
+                @if(!$talent->image && $talent->images->isEmpty())
+                    <div class="gallery-item large">
+                        <img src="{{ asset('images/placeholder-talent.png') }}" alt="Placeholder">
+                    </div>
+                @endif
             </div>
 
             <div class="talent-info-block">
-                <h1 class="talent-page-name">{{ $name ?? 'Apeksha' }}</h1>
+                <h1 class="talent-page-name">{{ $talent->name ?? $name }}</h1>
                 
                 <div class="talent-stats-row">
+                    @if($talent->height)
                     <div class="stat-spec">
                         <span class="spec-label">HEIGHT:</span>
-                        <span class="spec-value">5'7"</span>
+                        <span class="spec-value">{{ $talent->height }}</span>
                     </div>
+                    @endif
+                    
+                    @if($talent->bust)
                     <div class="stat-spec">
                         <span class="spec-label">BUST:</span>
-                        <span class="spec-value">33"</span>
+                        <span class="spec-value">{{ $talent->bust }}</span>
                     </div>
+                    @endif
+                    
+                    @if($talent->waist)
                     <div class="stat-spec">
                         <span class="spec-label">WAIST:</span>
-                        <span class="spec-value">26"</span>
+                        <span class="spec-value">{{ $talent->waist }}</span>
                     </div>
+                    @endif
+                    
+                    @if($talent->hips)
                     <div class="stat-spec">
                         <span class="spec-label">HIPS:</span>
-                        <span class="spec-value">38"</span>
+                        <span class="spec-value">{{ $talent->hips }}</span>
                     </div>
+                    @endif
+                    
+                    @if($talent->shoe_size)
                     <div class="stat-spec">
                         <span class="spec-label">SHOE SIZE:</span>
-                        <span class="spec-value">39</span>
+                        <span class="spec-value">{{ $talent->shoe_size }}</span>
                     </div>
+                    @endif
                 </div>
 
                 <div class="talent-actions">

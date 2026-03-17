@@ -6,7 +6,7 @@
         </div>
     </div>
 
-    <x-services-section :showViewAll="false" />
+    <x-services-section :services="$services" :showViewAll="false" />
 
     <style>
         .listing-page-header {

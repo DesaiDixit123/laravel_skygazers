@@ -3,9 +3,15 @@
     
     <x-about-section />
     
-    <x-services-section />
+    <x-services-section :services="$services" />
     
-    <x-talent-section />
+    <x-talent-section 
+        :talents="$talents" 
+        :creatorsCount="$creatorsCount" 
+        :campaignsCount="$campaignsCount" 
+        :talentCategories="$talentCategories" 
+        :talentCountries="$talentCountries" 
+    />
     
     <x-team-section />
     

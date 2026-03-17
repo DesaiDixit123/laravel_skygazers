@@ -6,7 +6,14 @@
         </div>
     </div>
 
-    <x-talent-section :showViewAll="false" />
+    <x-talent-section 
+        :talents="$talents" 
+        :creatorsCount="$creatorsCount" 
+        :campaignsCount="$campaignsCount" 
+        :talentCategories="$talentCategories" 
+        :talentCountries="$talentCountries" 
+        :showViewAll="false" 
+    />
 
     <style>
         .listing-page-header {

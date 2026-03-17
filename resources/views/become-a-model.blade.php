@@ -6,22 +6,25 @@
                 <p class="form-subtitle">Join Sky Gazers Studio. Models from all countries are welcome to apply.</p>
             </header>
 
-            <form action="#" class="application-form">
+            <div id="application-status" class="application-toast d-none"></div>
+
+            <form action="{{ route('model-application.store') }}" method="POST" class="application-form" id="become-model-form">
+                @csrf
                 <!-- Core Application Info -->
                 <div class="form-section">
                     <div class="form-group">
                         <label for="full_name">Full Name <span class="required">*</span></label>
-                        <input type="text" id="full_name" placeholder="Your full name" required>
+                        <input type="text" id="full_name" name="full_name" placeholder="Your full name" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email <span class="required">*</span></label>
-                        <input type="email" id="email" placeholder="Your email address" required>
+                        <input type="email" id="email" name="email" placeholder="Your email address" required>
                     </div>
 
                     <div class="form-group">
                         <label for="country">Country <span class="required">*</span></label>
-                        <select id="country" required>
+                        <select id="country" name="country" required>
                             <option value="" disabled selected>Select your country</option>
                             <option value="india">India</option>
                             <option value="usa">USA</option>
@@ -54,7 +57,7 @@
 
                     <div class="form-group">
                         <label for="age">Age <span class="required">*</span></label>
-                        <input type="number" id="age" placeholder="Your age" required>
+                        <input type="number" id="age" name="age" placeholder="Your age" required>
                     </div>
 
                     <div class="form-group">
@@ -77,17 +80,17 @@
 
                     <div class="form-group">
                         <label for="height">Height (cm/inches) <span class="required">*</span></label>
-                        <input type="text" id="height" placeholder="e.g. 175cm or 5'9\" required>
+                        <input type="text" id="height" name="height" placeholder="e.g. 175cm or 5'9\" required>
                     </div>
 
                     <div class="form-group">
                         <label for="measurements">Measurements <span class="required">*</span></label>
-                        <input type="text" id="measurements" placeholder="Bust - Waist - Hip" required>
+                        <input type="text" id="measurements" name="measurements" placeholder="Bust - Waist - Hip" required>
                     </div>
 
                     <div class="form-group">
                         <label for="affiliate">Referral / Affiliate Code</label>
-                        <input type="text" id="affiliate" placeholder="Enter code if any">
+                        <input type="text" id="affiliate" name="affiliate_code" placeholder="Enter code if any">
                     </div>
                 </div>
 
@@ -97,17 +100,17 @@
                     <div class="social-grid">
                         <div class="form-group">
                             <label for="instagram">Instagram Link / Username <span class="required">*</span></label>
-                            <input type="text" id="instagram" placeholder="your_username or link" required>
+                            <input type="text" id="instagram" name="instagram" placeholder="your_username or link" required>
                         </div>
 
                         <div class="form-group">
                             <label for="telegram">Telegram Link / Username <span class="required">*</span></label>
-                            <input type="text" id="telegram" placeholder="@username or link" required>
+                            <input type="text" id="telegram" name="telegram" placeholder="@username or link" required>
                         </div>
 
                         <div class="form-group">
                             <label for="phone">WhatsApp Number <span class="required">*</span></label>
-                            <input type="tel" id="phone" placeholder="Include country code" required>
+                            <input type="tel" id="phone" name="whatsapp_number" placeholder="Include country code" required>
                         </div>
                     </div>
                 </div>
@@ -236,6 +239,45 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.8);
+        }
+
+        .alert {
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .alert-success {
+            background-color: rgba(46, 213, 115, 0.1);
+            border: 1px solid rgba(46, 213, 115, 0.2);
+            color: #2ed573;
+        }
+
+        .alert-danger {
+            background-color: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+        }
+
+        .d-none { display: none; }
+
+        .application-toast {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            min-width: 300px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideDown 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
         }
 
         .form-group {
@@ -448,4 +490,69 @@
             }
         }
     </style>
+
+    <script>
+    document.getElementById('become-model-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const form = this;
+        const btn = form.querySelector('.btn-submit');
+        const status = document.getElementById('application-status');
+        const originalBtnText = btn.textContent;
+        
+        btn.disabled = true;
+        btn.textContent = 'SUBMITTING...';
+        
+        const formData = new FormData(form);
+        
+        // Clear any previous dismissal timeout if it exists
+        if (window.statusTimeout) clearTimeout(window.statusTimeout);
+        if (window.hideTimeout) clearTimeout(window.hideTimeout);
+
+        status.style.transition = "none";
+        status.style.opacity = "1";
+        status.classList.remove('d-none', 'alert-danger', 'alert-success');
+        
+        // Scroll to top of form smoothly to ensure visibility even without fixed position
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                status.classList.add('alert', 'alert-success');
+                status.textContent = data.message;
+                form.reset();
+                
+                // Auto-hide status after 1 second
+                window.statusTimeout = setTimeout(() => {
+                    status.style.transition = "opacity 0.4s ease";
+                    status.style.opacity = "0";
+                    window.hideTimeout = setTimeout(() => {
+                        status.classList.add('d-none');
+                    }, 400);
+                }, 1000);
+            } else {
+                status.classList.add('alert', 'alert-danger');
+                status.textContent = 'Something went wrong. Please check your information.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            status.classList.add('alert', 'alert-danger');
+            status.textContent = 'An error occurred. Please try again.';
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.textContent = originalBtnText;
+        });
+    });
+    </script>
 </x-layout>

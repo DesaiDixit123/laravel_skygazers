@@ -1,50 +1,52 @@
+@props(['talents' => [], 'showViewAll' => true, 'creatorsCount' => '500+', 'campaignsCount' => '250+', 'talentCategories' => [], 'talentCountries' => []])
+
 <section id="talent" class="talent-section">
     <div class="container">
         <h2 class="section-title-dark">Our Talent Network</h2>
         <div class="talent-intro">
             <div class="talent-stats">
                 <div class="stat-item">
-                    <span class="stat-number">500+</span>
+                    <span class="stat-number">{{ $creatorsCount }}</span>
                     <span class="stat-label">Creators</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">250+</span>
+                    <span class="stat-number">{{ $campaignsCount }}</span>
                     <span class="stat-label">Brand Campaigns</span>
                 </div>
             </div>
-            <p class="talent-description">Our network spans across India, Brazil, UK, Australia, Germany, France, Portugal, and Slovenia, featuring top-tier creators in Lifestyle, Fashion, Beauty, Fitness, Travel, and UGC.</p>
+            <p class="talent-description">
+                Our network spans across 
+                @foreach($talentCountries as $key => $country)
+                    <span class="country-tag" style="animation-delay: {{ 0.1 * ($key + 1) }}s">{{ $country->name }}</span>{{ $loop->last ? '' : ',' }} {{ $loop->remaining == 1 ? 'and ' : '' }}
+                @endforeach
+                featuring top-tier creators in 
+                @foreach($talentCategories as $category)
+                    {{ $category->name }}{{ $loop->last ? '.' : ', ' }}
+                @endforeach
+            </p>
         </div>
 
         <div class="model-filters">
             <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="lifestyle">Lifestyle</button>
-            <button class="filter-btn" data-filter="fashion">Fashion</button>
-            <button class="filter-btn" data-filter="beauty">Beauty</button>
-            <button class="filter-btn" data-filter="ugc">UGC</button>
+            @foreach($talentCategories as $category)
+                <button class="filter-btn" data-filter="{{ $category->slug }}">{{ $category->name }}</button>
+            @endforeach
         </div>
 
         <div class="models-grid">
-            @php
-                $talents = [
-                    ['name' => 'SARAH L', 'category' => 'lifestyle', 'image' => 'creator_1.png', 'label' => 'Lifestyle'],
-                    ['name' => 'MARCO R', 'category' => 'fashion', 'image' => 'creator_2.png', 'label' => 'Fashion'],
-                    ['name' => 'ELENA K', 'category' => 'beauty', 'image' => 'creator_3.png', 'label' => 'Beauty'],
-                    ['name' => 'DAVID W', 'category' => 'ugc', 'image' => 'creator_4.png', 'label' => 'UGC Creator'],
-                    ['name' => 'SOFIA M', 'category' => 'lifestyle', 'image' => 'creator_5.png', 'label' => 'Lifestyle'],
-                    ['name' => 'LUCAS P', 'category' => 'fashion', 'image' => 'creator_6.png', 'label' => 'Fashion'],
-                    ['name' => 'ANNA S', 'category' => 'beauty', 'image' => 'creator_1.png', 'label' => 'Beauty'],
-                    ['name' => 'CHRIS B', 'category' => 'ugc', 'image' => 'creator_2.png', 'label' => 'UGC Creator'],
-                ];
-            @endphp
 
             @foreach($talents as $talent)
-                <a href="{{ url('/talent/' . strtolower(str_replace(' ', '-', $talent['name']))) }}" class="model-card-link">
-                    <div class="model-card" data-category="{{ $talent['category'] }}">
+                <a href="{{ url('/talent/' . strtolower(str_replace(' ', '-', $talent->name))) }}" class="model-card-link">
+                    <div class="model-card" data-category="{{ $talent->category }}">
                         <div class="model-image-wrapper">
-                            <img src="{{ asset('images/' . $talent['image']) }}" alt="{{ $talent['name'] }}">
+                        @if($talent->image)
+                            <img src="{{ Storage::url($talent->image) }}" alt="{{ $talent->name }}">
+                        @else
+                            <img src="{{ asset('images/creator_1.png') }}" alt="{{ $talent->name }}">
+                        @endif
                             <div class="model-overlay">
-                                <span class="model-gender">{{ $talent['label'] }}</span>
-                                <h4 class="model-name">{{ $talent['name'] }}</h4>
+                                <span class="model-gender">{{ $talent->label }}</span>
+                                <h4 class="model-name">{{ $talent->name }}</h4>
                             </div>
                         </div>
                     </div>
@@ -103,8 +105,42 @@
 
     .talent-description {
         font-size: 16px;
-        line-height: 1.6;
+        line-height: 2.2;
         color: rgba(255,255,255,0.8);
+    }
+
+    .country-tag {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 2px 12px;
+        margin: 0 4px;
+        border-radius: 20px;
+        font-weight: 500;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        animation: pulse-glow 2s infinite alternate;
+        cursor: default;
+    }
+
+    .country-tag:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 4px 15px rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.6);
+        animation: none; /* pause animation on hover */
+    }
+
+    @keyframes pulse-glow {
+        0% { 
+            border-color: rgba(255, 255, 255, 0.2); 
+            box-shadow: 0 0 0px rgba(255, 255, 255, 0); 
+        }
+        100% { 
+            border-color: rgba(255, 255, 255, 0.4); 
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.15); 
+        }
     }
 
     .section-title-dark {

@@ -1,56 +1,32 @@
+@props(['services' => [], 'showViewAll' => true])
+
 <section id="services" class="services-section">
     <div class="container">
         <h2 class="section-title-dark">Our Services</h2>
         
         <div class="services-grid">
-            @php
-                $services = [
-                    [
-                        'title' => 'Influencer Collaborations',
-                        'summary' => 'End-to-end influencer collaboration management across multiple countries.',
-                        'description' => 'We connect brands with talented creators and influencers to produce impactful digital campaigns across India, Brazil, UK, Australia, Germany, France, Portugal, and Slovenia.',
-                        'image' => 'service_influencer.png',
-                        'benefits' => ['500+ verified creators', '250+ successful collaborations', 'Multi-country execution', 'Transparent reporting']
-                    ],
-                    [
-                        'title' => 'Brand Shoots & Content',
-                        'summary' => 'Professional brand shoots and high-quality campaign content.',
-                        'description' => 'We organize influencer shoots, product shoots, lifestyle campaigns, and social-media-ready content aligned with brand strategy.',
-                        'image' => 'service_shoot.png',
-                        'benefits' => ['Creative direction', 'Campaign-focused visuals', 'High-quality production', 'Social media optimized']
-                    ],
-                    [
-                        'title' => 'UGC Content Creation',
-                        'summary' => 'Authentic user-generated content for social media and ads.',
-                        'description' => 'We provide engaging UGC videos and product-based content created by real creators to increase trust, engagement, and conversion rates.',
-                        'image' => 'service_ugc.png',
-                        'benefits' => ['Authentic storytelling', 'High-performing ad content', 'Engagement-focused videos']
-                    ],
-                    [
-                        'title' => 'Talent Representation',
-                        'summary' => 'Strategic representation and growth support for digital creators.',
-                        'description' => 'We manage and support creators by connecting them with brands, handling collaborations, and helping them grow their digital presence globally.',
-                        'image' => 'service_talent.png',
-                        'benefits' => ['Brand partnerships', 'Collaboration management', 'Creator growth strategy']
-                    ],
-                ];
-            @endphp
 
             @foreach($services as $service)
                 <div class="service-card">
                     <div class="service-image-wrapper">
-                        <img src="{{ asset('images/' . $service['image']) }}" alt="{{ $service['title'] }}">
+                        @if($service->image)
+                            <img src="{{ Storage::url($service->image) }}" alt="{{ $service->title }}">
+                        @else
+                            <img src="{{ asset('images/service_influencer.png') }}" alt="{{ $service->title }}">
+                        @endif
                         <div class="service-overlay">
-                            <h4 class="service-title">{{ $service['title'] }}</h4>
-                            <p class="service-summary">{{ $service['summary'] }}</p>
+                            <h4 class="service-title">{{ $service->title }}</h4>
+                            <p class="service-summary">{{ $service->summary }}</p>
                         </div>
                     </div>
                     <div class="service-details">
-                        <p class="service-description">{{ $service['description'] }}</p>
+                        <div class="service-description">{!! $service->description !!}</div>
                         <ul class="service-benefits">
-                            @foreach($service['benefits'] as $benefit)
-                                <li><i class="fas fa-check"></i> {{ $benefit }}</li>
-                            @endforeach
+                            @if(is_array($service->benefits) || is_object($service->benefits))
+                                @foreach($service->benefits as $benefit)
+                                    <li><i class="fas fa-check"></i> {{ $benefit }}</li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
