@@ -96,7 +96,6 @@
 
     .contact-form-container {
         flex: 2;
-        min-width: 400px;
         background-color: #222222;
         padding: 40px;
         border-radius: 8px;
@@ -168,8 +167,15 @@
         }
         
         .contact-form-container {
-            min-width: 100%;
             padding: 30px 20px;
+        }
+
+        .form-group {
+            min-width: 100%;
+        }
+
+        .btn-send {
+            width: 100%;
         }
     }
 

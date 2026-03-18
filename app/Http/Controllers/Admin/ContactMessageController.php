@@ -23,6 +23,14 @@ class ContactMessageController extends Controller
             });
         }
 
+        if ($request->filled('start_date')) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereDate('created_at', '<=', $request->end_date);
+        }
+
         $messages = $query->latest()->paginate(20);
         return view('admin.messages.index', compact('messages'));
     }

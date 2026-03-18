@@ -653,9 +653,36 @@
             margin-bottom: 5px;
         }
 
+        .form-section {
+            margin-bottom: 60px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            width: 100%;
+        }
+
         @media (max-width: 1200px) {
             .form-section {
                 grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .form-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .social-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
         }
 
@@ -668,24 +695,25 @@
                 padding: 40px 20px;
             }
 
-            .form-section {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                margin-bottom: 40px;
-                padding-bottom: 40px;
-            }
-
-            .social-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
             .form-title {
                 font-size: 32px;
             }
 
-            .polaroid-guide {
-                grid-template-columns: repeat(2, 1fr);
+            .guidelines-grid, .photo-upload-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px !important;
+            }
+            
+            .guidelines-container {
+                padding: 20px;
+            }
+            
+            .info-badge {
+                padding: 10px 15px;
+            }
+            
+            .badge-text {
+                font-size: 10px;
             }
         }
     </style>

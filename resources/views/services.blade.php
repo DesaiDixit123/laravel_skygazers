@@ -18,7 +18,7 @@
 
         .listing-page-title {
             font-family: 'Playfair Display', serif;
-            font-size: 48px;
+            font-size: clamp(32px, 8vw, 48px);
             font-weight: 700;
             margin-bottom: 20px;
             color: #ffffff;

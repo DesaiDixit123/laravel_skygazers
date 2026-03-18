@@ -21,10 +21,23 @@ class ExportController extends Controller
 
         $query = $modelClass::query();
 
+        if ($request->filled('start_date')) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereDate('created_at', '<=', $request->end_date);
+        }
+
         // Apply same filters as in the index controllers
         if ($request->filled('search')) {
             $search = $request->search;
             $query = $this->applySearch($query, $resource, $search);
+        }
+
+        if ($request->filled('selected_ids')) {
+            $ids = explode(',', $request->selected_ids);
+            $query->whereIn('id', $ids);
         }
 
         $filename = Str::slug($resource) . '-' . now()->format('Y-m-d-His');

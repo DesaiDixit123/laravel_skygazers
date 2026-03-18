@@ -23,9 +23,15 @@ class ServiceController extends Controller
 
         if ($request->filled('status')) {
             $status = $request->status;
-            $query->where(function ($q) use ($status) {
-                $q->where('is_active', '=', $status == 'active' ? 1 : 0);
-            });
+            $query->where('is_active', '=', $status == 'active' ? 1 : 0);
+        }
+
+        if ($request->filled('start_date')) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereDate('created_at', '<=', $request->end_date);
         }
 
         $services = $query->latest()->get();

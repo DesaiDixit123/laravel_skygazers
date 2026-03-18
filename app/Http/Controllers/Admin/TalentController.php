@@ -26,9 +26,15 @@ class TalentController extends Controller
 
         if ($request->filled('status')) {
             $isActive = $request->status == 'active';
-            $query->where(function ($q) use ($isActive) {
-                $q->where('is_active', '=', $isActive);
-            });
+            $query->where('is_active', '=', $isActive);
+        }
+
+        if ($request->filled('start_date')) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereDate('created_at', '<=', $request->end_date);
         }
 
         $talents = $query->latest()->get();

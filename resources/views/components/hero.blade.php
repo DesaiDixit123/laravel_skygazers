@@ -58,17 +58,18 @@
     }
 
     .hero-title {
-        font-family: 'Inter', sans-serif; /* Re-analyzing screenshot: it looks like a bold sans-serif */
-        font-size: 64px;
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(32px, 8vw, 64px);
         font-weight: 800;
         letter-spacing: 2px;
         margin: 0;
-        line-height: 1;
+        line-height: 1.1;
     }
 
     @media (max-width: 768px) {
-        .hero-title {
-            font-size: 36px;
+        .btn-hero {
+            padding: 12px 25px !important;
+            font-size: 12px !important;
         }
     }
 </style>

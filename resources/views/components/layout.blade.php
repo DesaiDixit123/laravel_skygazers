@@ -36,6 +36,7 @@
             color: var(--text-light);
             margin: 0;
             overflow-x: hidden;
+            width: 100%;
         }
 
         h1, h2, h3, .font-serif {
@@ -75,6 +76,12 @@
         @media (max-width: 768px) {
             .container {
                 padding: 0 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
             }
         }
     </style>

@@ -156,6 +156,13 @@
         justify-content: center;
         gap: 30px;
         margin-bottom: 50px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .model-filters::-webkit-scrollbar {
+        display: none; /* Safari and Chrome */
     }
 
     .filter-btn {
@@ -167,6 +174,7 @@
         padding: 5px 0;
         position: relative;
         transition: color 0.3s ease;
+        white-space: nowrap;
     }
 
     .filter-btn.active, .filter-btn:hover {
@@ -269,16 +277,36 @@
     }
 
     @media (max-width: 768px) {
-        .models-grid {
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        }
-        
         .talent-stats {
-            gap: 30px;
+            gap: 20px;
         }
         
         .stat-number {
-            font-size: 32px;
+            font-size: 28px;
+        }
+
+        .talent-description {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .model-filters {
+            justify-content: flex-start;
+            padding: 0 20px 10px;
+            margin: 0 -20px 30px;
+        }
+
+        .models-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .model-overlay {
+            padding: 15px 10px;
+        }
+
+        .model-name {
+            font-size: 14px;
         }
     }
 </style>

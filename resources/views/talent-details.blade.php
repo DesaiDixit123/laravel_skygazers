@@ -186,5 +186,27 @@
                 grid-row: span 1;
             }
         }
+
+        @media (max-width: 768px) {
+            .talent-details-page {
+                padding: 100px 0 50px;
+            }
+            .talent-page-name {
+                font-size: 32px;
+            }
+            .talent-stats-row {
+                gap: 20px;
+            }
+            .stat-spec {
+                min-width: 80px;
+            }
+            .talent-actions {
+                flex-direction: column;
+            }
+            .btn-detail-primary, .btn-detail-secondary {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </x-layout>
