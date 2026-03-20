@@ -752,9 +752,9 @@
                 // Content-Type is handled automatically by FormData for multipart
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
+        .then(response => response.json().then(data => ({ ok: response.ok, status: response.status, data })))
+        .then(({ ok, status: httpStatus, data }) => {
+            if (ok && data.success) {
                 status.classList.add('alert', 'alert-success');
                 status.textContent = data.message;
                 form.reset();
@@ -768,17 +768,22 @@
                     if (placeholder) placeholder.style.display = 'flex';
                 });
                 
-                // Auto-hide status after 1 second
+                // Auto-hide status after 5 seconds
                 window.statusTimeout = setTimeout(() => {
                     status.style.transition = "opacity 0.4s ease";
                     status.style.opacity = "0";
                     window.hideTimeout = setTimeout(() => {
                         status.classList.add('d-none');
                     }, 400);
-                }, 1000);
+                }, 5000);
+            } else if (httpStatus === 422 && data.errors) {
+                // Laravel validation errors — show the first error messages
+                const errorMessages = Object.values(data.errors).flat();
+                status.classList.add('alert', 'alert-danger');
+                status.textContent = errorMessages.join(' | ');
             } else {
                 status.classList.add('alert', 'alert-danger');
-                status.textContent = 'Something went wrong. Please check your information.';
+                status.textContent = data.message || 'Something went wrong. Please check your information.';
             }
         })
         .catch(error => {
