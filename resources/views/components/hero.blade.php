@@ -46,6 +46,13 @@
         text-align: center;
         color: white;
         z-index: 1;
+        padding-top: 40px; /* Small offset even on desktop */
+    }
+
+    @media (max-width: 1024px) {
+        .hero-content {
+            padding-top: 80px; /* Offset for the 70px mobile header */
+        }
     }
 
     .hero-welcome {
@@ -59,17 +66,75 @@
 
     .hero-title {
         font-family: 'Inter', sans-serif;
-        font-size: clamp(32px, 8vw, 64px);
+        font-size: clamp(28px, 9vw, 64px); /* Slightly smaller base for very small screens */
         font-weight: 800;
         letter-spacing: 2px;
         margin: 0;
         line-height: 1.1;
+        padding: 0 15px; /* Prevent text touching screen edges */
+    }
+
+    .hero-description {
+        max-width: 800px;
+        margin: 20px auto;
+        font-size: 18px;
+        opacity: 0.9;
+        padding: 0 20px;
+    }
+
+    .btn-hero {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 15px 40px;
+        background: white;
+        color: black;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: 0.3s;
+        max-width: 90%; /* Prevent button from wider than screen */
+        white-space: normal; /* Allow text to wrap if it's too long */
+        line-height: 1.4;
     }
 
     @media (max-width: 768px) {
+        .hero-title {
+            font-size: clamp(26px, 10vw, 42px);
+        }
+        
+        .hero-description {
+            font-size: 15px !important;
+        }
+
         .btn-hero {
             padding: 12px 25px !important;
             font-size: 12px !important;
+            margin-top: 25px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-welcome {
+            font-size: 14px;
+        }
+        
+        .hero-title {
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+        
+        .hero-description {
+            font-size: 14px !important;
+            margin: 15px auto !important;
+        }
+
+        .btn-hero {
+            padding: 12px 20px !important;
+            font-size: 11px !important;
+            width: 85%; /* Give it a bit more width but keep it centered */
         }
     }
 </style>

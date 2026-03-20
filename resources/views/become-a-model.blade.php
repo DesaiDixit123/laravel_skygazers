@@ -707,13 +707,44 @@
             .guidelines-container {
                 padding: 20px;
             }
-            
-            .info-badge {
-                padding: 10px 15px;
+        }
+
+        @media (max-width: 480px) {
+            .container-narrow {
+                padding: 0 15px;
             }
-            
-            .badge-text {
-                font-size: 10px;
+
+            .application-form {
+                padding: 30px 15px;
+            }
+
+            .form-title {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+
+            .form-section {
+                margin-bottom: 40px;
+                padding-bottom: 40px;
+                gap: 20px;
+            }
+
+            .photo-upload-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+
+            .photo-slot {
+                aspect-ratio: 16/9;
+            }
+
+            .btn-submit {
+                padding: 18px 40px;
+            }
+
+            .guidelines-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
             }
         }
     </style>

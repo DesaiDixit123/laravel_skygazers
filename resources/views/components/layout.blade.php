@@ -31,13 +31,18 @@
             --sidebar-width: 280px;
         }
 
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+            -webkit-text-size-adjust: 100%; /* Prevent font scaling on orientation change */
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-light);
-            margin: 0;
-            overflow-x: hidden;
-            width: 100%;
         }
 
         h1, h2, h3, .font-serif {
