@@ -70,9 +70,16 @@
 
     .contact-heading {
         font-family: 'Playfair Display', serif;
-        font-size: 32px;
+        font-size: clamp(28px, 8vw, 36px);
         font-weight: 700;
         margin-bottom: 40px;
+        text-align: center;
+    }
+
+    @media (min-width: 1025px) {
+        .contact-heading {
+            text-align: left;
+        }
     }
 
     .contact-item {

@@ -24,6 +24,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         :root {
             --bg-dark: #000000;
             --text-gold: #c5a059;

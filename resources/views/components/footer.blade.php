@@ -136,21 +136,32 @@
     }
 
     @media (max-width: 768px) {
+        .main-footer {
+            padding: 40px 0 30px;
+        }
+
         .footer-top {
             grid-template-columns: 1fr;
             text-align: center;
+            gap: 30px;
         }
         
-        .footer-logo-subtext {
-            margin-bottom: 20px;
+        .footer-logo {
+            margin: 0 auto 25px;
         }
 
         .footer-nav ul {
             justify-content: center;
+            gap: 15px;
         }
 
         .footer-contact-list li {
             justify-content: center;
+        }
+
+        .map-container {
+            max-width: 100%;
+            margin: 0 auto;
         }
     }
 </style>

@@ -34,10 +34,11 @@
 
     .section-title-light {
         font-family: 'Playfair Display', serif;
-        font-size: 36px;
+        font-size: clamp(28px, 8vw, 36px);
         text-align: center;
         margin-bottom: 60px;
         letter-spacing: 2px;
+        padding: 0 15px;
     }
 
     .team-flex {
@@ -85,7 +86,7 @@
 
     .member-name {
         font-family: 'Playfair Display', serif;
-        font-size: 32px;
+        font-size: clamp(24px, 7vw, 32px);
         font-weight: 700;
         margin-bottom: 5px;
     }

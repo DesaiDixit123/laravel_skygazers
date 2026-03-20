@@ -43,7 +43,7 @@
 
     .about-heading {
         font-family: 'Playfair Display', serif;
-        font-size: 32px;
+        font-size: clamp(24px, 7vw, 32px);
         font-weight: 700;
         margin-bottom: 30px;
         line-height: 1.2;
@@ -55,6 +55,19 @@
         margin-bottom: 20px;
         color: #444;
         text-align: justify;
+    }
+
+    @media (max-width: 480px) {
+        .about-text p {
+            text-align: left;
+            font-size: 14px;
+        }
+        .about-heading {
+            font-size: 24px;
+        }
+        .about-section {
+            padding: 60px 0;
+        }
     }
 
     .btn-view-models {
@@ -81,11 +94,15 @@
         min-width: 300px;
         display: flex;
         justify-content: center;
+        width: 100%;
     }
 
     .image-wrapper {
         position: relative;
         z-index: 2;
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
     .about-image {
@@ -93,25 +110,25 @@
         max-width: 400px;
         height: auto;
         display: block;
-        box-shadow: 20px 20px 0px rgba(0,0,0,0.05);
+        box-shadow: 10px 10px 0px rgba(0,0,0,0.05); /* Reduced shadow depth */
     }
 
     .image-shadow-box {
         position: absolute;
-        bottom: -20px;
-        right: -20px;
-        width: 100%;
-        height: 100%;
+        bottom: -15px;
+        right: 15px; /* Stay inside container */
+        width: 80%;
+        height: 80%;
         background-color: #333;
         z-index: -1;
     }
 
     .dots-pattern-about {
         position: absolute;
-        top: -40px;
-        left: -40px;
-        width: 150px;
-        height: 150px;
+        top: -20px;
+        left: 20px; /* Stay inside container */
+        width: 100px;
+        height: 100px;
         background-image: radial-gradient(#ccc 1px, transparent 1px);
         background-size: 15px 15px;
         z-index: 1;
@@ -129,6 +146,30 @@
 
         .about-image-container {
             margin-top: 50px;
+            padding: 0 20px; /* Buffer for decorations */
+        }
+        
+        .dots-pattern-about {
+            left: 10%; /* More centered approach for mobile */
+        }
+        
+        .image-shadow-box {
+            right: 10%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .about-image-container {
+            min-width: unset;
+        }
+        
+        .dots-pattern-about, .image-shadow-box {
+            display: none; /* Remove problematic decorations on tiny screens */
+        }
+        
+        .about-image {
+            box-shadow: none;
+            border: 10px solid #f9f9f9;
         }
     }
 </style>

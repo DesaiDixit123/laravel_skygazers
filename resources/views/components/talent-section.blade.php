@@ -145,10 +145,11 @@
 
     .section-title-dark {
         font-family: 'Playfair Display', serif;
-        font-size: 36px;
+        font-size: clamp(28px, 8vw, 36px);
         text-align: center;
         margin-bottom: 40px;
         letter-spacing: 2px;
+        padding: 0 15px;
     }
 
     .model-filters {
@@ -157,8 +158,9 @@
         gap: 30px;
         margin-bottom: 50px;
         overflow-x: auto;
-        padding-bottom: 10px;
+        padding: 0 20px 10px;
         scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
     }
 
     .model-filters::-webkit-scrollbar {
@@ -277,38 +279,63 @@
     }
 
     @media (max-width: 768px) {
+        .talent-section {
+            padding: 60px 0;
+        }
+
         .talent-stats {
-            gap: 20px;
+            gap: 30px;
         }
         
         .stat-number {
-            font-size: 28px;
+            font-size: 32px;
         }
 
         .talent-description {
             font-size: 14px;
             line-height: 1.8;
+            padding: 0 10px;
         }
 
         .model-filters {
             justify-content: flex-start;
-            padding: 0 20px 10px;
-            margin: 0 -20px 30px;
+            margin-bottom: 30px;
         }
 
         .models-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            grid-template-columns: 1fr; /* User requested single single images */
+            gap: 20px;
+            padding: 0 10px;
+        }
+
+        .model-card {
+            aspect-ratio: 16/10; /* Better aspect ratio for single column on mobile */
         }
 
         .model-overlay {
-            padding: 15px 10px;
+            padding: 20px 15px;
         }
 
         .model-name {
-            font-size: 14px;
+            font-size: 18px;
         }
     }
+
+    @media (max-width: 480px) {
+        .stat-number {
+            font-size: 28px;
+        }
+        .stat-label {
+            font-size: 10px;
+        }
+        .talent-stats {
+            gap: 20px;
+        }
+        .section-title-dark {
+            font-size: 26px;
+        }
+    }
+</style>
 </style>
 
 <script>

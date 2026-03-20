@@ -55,9 +55,19 @@
     }
 
     @media (max-width: 768px) {
+        .services-section {
+            padding: 60px 0;
+        }
+
+        .section-title-dark {
+            font-size: clamp(26px, 8vw, 32px);
+            padding: 0 15px;
+        }
+
         .services-grid {
             grid-template-columns: 1fr;
             gap: 20px;
+            padding: 0 15px;
         }
     }
 
