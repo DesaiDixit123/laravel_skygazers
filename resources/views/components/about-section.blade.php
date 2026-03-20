@@ -134,6 +134,25 @@
         z-index: 1;
     }
 
+    @media (max-width: 530px) {
+        .about-section {
+            padding: 60px 0;
+        }
+        .about-heading {
+            font-size: clamp(22px, 6vw, 24px);
+            margin-bottom: 25px;
+        }
+        .about-text p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .image-shadow-box, .dots-pattern-about {
+            display: none;
+        }
+    }
+
     @media (max-width: 1024px) {
         .about-flex {
             flex-direction: column;

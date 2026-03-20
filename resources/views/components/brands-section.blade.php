@@ -78,5 +78,24 @@
         .brands-grid {
             gap: 30px;
         }
+        .section-title-light {
+            font-size: 24px;
+        }
+    }
+
+    @media (max-width: 530px) {
+        .brands-grid {
+            gap: 12px;
+        }
+        .brand-dummy {
+            font-size: 16px;
+        }
+        .brands-section {
+            padding: 40px 0;
+        }
+        .section-title-light {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
     }
 </style>

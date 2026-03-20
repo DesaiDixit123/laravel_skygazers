@@ -54,6 +54,32 @@
         gap: 30px;
     }
 
+    @media (max-width: 530px) {
+        .services-section {
+            padding: 60px 0;
+        }
+        .section-title-dark {
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+        .services-grid {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .services-section {
+            padding: 50px 10px;
+        }
+        .section-title-dark {
+            font-size: 24px;
+            padding: 0 10px;
+        }
+        .services-grid {
+            padding: 0 10px;
+        }
+    }
+
     @media (max-width: 768px) {
         .services-section {
             padding: 60px 0;

@@ -709,6 +709,22 @@
             }
         }
 
+        @media (max-width: 500px) {
+        .form-row, .upload-grid {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+        }
+        .form-section {
+            padding: 30px 15px;
+        }
+        .section-title {
+            font-size: 20px;
+        }
+        .upload-box {
+            height: 140px;
+        }
+    }
+
         @media (max-width: 480px) {
             .container-narrow {
                 padding: 0 15px;

@@ -164,4 +164,30 @@
             margin: 0 auto;
         }
     }
+
+    @media (max-width: 480px) {
+        .footer-nav ul {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+        .footer-nav li {
+            font-size: 13px;
+        }
+        .footer-logo img {
+            height: 40px;
+        }
+    }
+
+    @media (max-width: 530px) {
+        .footer-nav ul {
+            gap: 10px;
+        }
+        .footer-contact-list {
+            gap: 15px;
+        }
+        .footer-logo img {
+            height: 30px;
+        }
+    }
 </style>

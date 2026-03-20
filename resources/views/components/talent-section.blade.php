@@ -321,7 +321,14 @@
         }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 530px) {
+        .talent-section {
+            padding: 60px 0;
+        }
+        .section-title-light {
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
         .stat-number {
             font-size: 28px;
         }
@@ -330,9 +337,26 @@
         }
         .talent-stats {
             gap: 20px;
+            margin-bottom: 40px;
         }
-        .section-title-dark {
-            font-size: 26px;
+        .model-card .model-name {
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .talent-section {
+            padding: 50px 0;
+        }
+        .stat-number {
+            font-size: 28px;
+        }
+        .talent-stats {
+            gap: 20px;
+            padding: 0 15px;
+        }
+        .section-title-light {
+            padding: 0 15px;
         }
     }
 </style>

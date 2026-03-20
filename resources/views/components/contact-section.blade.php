@@ -82,6 +82,22 @@
         }
     }
 
+    @media (max-width: 480px) {
+        .contact-section {
+            padding: 60px 15px;
+        }
+        .contact-heading {
+            font-size: clamp(24px, 7vw, 28px);
+            padding: 0 10px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .contact-heading {
+            text-align: center;
+        }
+    }
+
     .contact-item {
         display: flex;
         align-items: center;

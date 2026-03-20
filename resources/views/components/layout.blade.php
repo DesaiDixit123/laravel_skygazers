@@ -85,13 +85,33 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 0 30px;
+                padding: 0 20px;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 530px) {
             .container {
                 padding: 0 15px;
+            }
+        }
+
+        @media (max-width: 410px) {
+            .container {
+                padding: 0 12px; /* Slightly more padding for very small screens */
+            }
+        }
+
+        /* Floating Buttons Mobile Adjustment */
+        @media (max-width: 480px) {
+            .floating-buttons {
+                bottom: 15px;
+                right: 15px;
+                gap: 8px;
+            }
+            .floating-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
             }
         }
     </style>
