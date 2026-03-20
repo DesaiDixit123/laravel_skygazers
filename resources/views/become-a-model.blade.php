@@ -743,13 +743,17 @@
         // Scroll to top of form smoothly to ensure visibility even without fixed position
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                        || document.querySelector('input[name="_token"]')?.value;
+
         fetch(form.action, {
             method: 'POST',
             body: formData,
+            credentials: 'same-origin',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-                // Content-Type is handled automatically by FormData for multipart
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
             }
         })
         .then(response => response.json().then(data => ({ ok: response.ok, status: response.status, data })))
