@@ -49,6 +49,7 @@ class ExportController extends Controller
         if ($format === 'pdf') {
             $export = new $exportClass($query);
             $data = [
+                'resource' => $resource,
                 'title' => Str::headline($resource) . ' Export',
                 'headings' => $export->headings(),
                 'rows' => $export->collection()->map(fn($item) => $export->map($item))

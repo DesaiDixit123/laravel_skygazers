@@ -73,8 +73,23 @@
         <tbody>
             @foreach($rows as $row)
                 <tr>
-                    @foreach($row as $cell)
-                        <td>{{ $cell }}</td>
+                    @foreach($row as $index => $cell)
+                        <td>
+                            @if(isset($resource) && $resource === 'model-applications' && $headings[$index] === 'Photos' && !empty($cell))
+                                @foreach(explode(', ', $cell) as $photo)
+                                    @php
+                                        // Use public_path for local storage files in PDF
+                                        $relativePath = str_replace(asset('storage/'), '', $photo);
+                                        $fullPath = public_path('storage/' . $relativePath);
+                                    @endphp
+                                    @if(file_exists($fullPath))
+                                        <img src="data:image/jpeg;base64,{{ base64_encode(file_get_contents($fullPath)) }}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 5px; margin-bottom: 5px; border: 1px solid #ddd;">
+                                    @endif
+                                @endforeach
+                            @else
+                                {{ $cell }}
+                            @endif
+                        </td>
                     @endforeach
                 </tr>
             @endforeach
