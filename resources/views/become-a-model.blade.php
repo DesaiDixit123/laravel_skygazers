@@ -723,6 +723,10 @@
         .upload-box {
             height: 140px;
         }
+        .global-info-display{
+            display: flex;
+            flex-direction: column;
+        }
     }
 
         @media (max-width: 480px) {

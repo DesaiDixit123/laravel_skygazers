@@ -160,7 +160,7 @@
             padding-top: 80px;
             width: 100%;
             position: relative;
-            left: -55px;
+            left: -5px;
         }
         
         .hero-welcome {

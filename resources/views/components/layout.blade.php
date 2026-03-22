@@ -98,6 +98,7 @@
         @media (max-width: 410px) {
             .container {
                 padding: 0 12px; /* Slightly more padding for very small screens */
+                width: 385px;
             }
         }
 
