@@ -159,6 +159,8 @@
         .hero-content {
             padding-top: 80px;
             width: 100%;
+            position: relative;
+            left: -55px;
         }
         
         .hero-welcome {
@@ -188,49 +190,51 @@
         }
     }
 
-    /* Dedicated range for 460px and below centering precision */
     @media (max-width: 460px) {
-        .hero-content {
-            padding-top: 70px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .hero-welcome {
-            font-size: 10px;
-            letter-spacing: 4px;
-            text-indent: 4px; /* Optical center fix */
-            margin-bottom: 15px;
-            width: 100%;
-        }
-
         .hero-title {
             font-size: 28px !important;
-            max-width: 100%;
-            padding: 0 10px;
         }
-
         .hero-description {
             font-size: 13px !important;
             max-width: 320px;
-            padding: 0 10px;
         }
-
         .btn-hero {
-            padding: 12px 20px !important;
             font-size: 10px !important;
             max-width: 260px;
-            margin: 25px auto 0 !important;
         }
     }
 
-    @media (max-width: 410px) {
+    @media (max-width: 390px) {
+        .hero-content {
+            padding-top: 60px;
+            width: 100%;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+
         .hero-title {
             font-size: 24px !important;
+            line-height: 1.1;
+            word-wrap: break-word;
+            overflow-wrap: break-word; /* Ensure it stays inside */
+            max-width: 100%;
+        }
+
+        .hero-description {
+            font-size: 12px !important;
+            max-width: 280px;
+        }
+
+        .btn-hero {
+            font-size: 9px !important;
+            padding: 10px 15px !important;
+            max-width: 240px;
+        }
+        
+        .hero-welcome {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-indent: 2px;
         }
     }
 </style>
