@@ -23,10 +23,8 @@
         <div class="row g-3">
             @foreach($application->photos as $photo)
             <div class="col-md-3">
-                <div class="border rounded overflow-hidden shadow-sm h-100">
-                    <a href="{{ Storage::url($photo) }}" target="_blank">
-                        <img src="{{ Storage::url($photo) }}" class="img-fluid w-100" style="height: 250px; object-fit: cover;" alt="Application Photo">
-                    </a>
+                <div class="border rounded overflow-hidden shadow-sm h-100 cursor-pointer" onclick="openImageModal('{{ Storage::url($photo) }}')">
+                    <img src="{{ Storage::url($photo) }}" class="img-fluid w-100" style="height: 250px; object-fit: cover; cursor: pointer;" alt="Application Photo">
                 </div>
             </div>
             @endforeach
@@ -125,3 +123,32 @@
     </div>
 </div>
 @endsection
+
+@push('styles')
+<style>
+    .cursor-pointer { cursor: pointer; }
+    .cursor-pointer:hover { opacity: 0.9; }
+</style>
+@endpush
+
+@push('scripts')
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-body p-0 text-center position-relative">
+                <img src="" id="modalImage" class="img-fluid rounded shadow-lg" style="max-height: 90vh;">
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openImageModal(src) {
+        document.getElementById('modalImage').src = src;
+        var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        myModal.show();
+    }
+</script>
+@endpush

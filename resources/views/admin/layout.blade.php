@@ -98,6 +98,7 @@
             }
         }
     </style>
+    @stack('styles')
 </head>
 <body>
     <!-- Sidebar Overlay for Mobile -->
@@ -229,5 +230,6 @@
             observer.observe(document.body, { childList: true, subtree: true });
         });
     </script>
+    @stack('scripts')
 </body>
 </html>
