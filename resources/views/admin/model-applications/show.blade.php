@@ -20,10 +20,13 @@
         <span class="badge bg-secondary">{{ count($application->photos) }} Photos Uploaded</span>
     </div>
     <div class="card-body">
+        @php
+            $photoUrls = collect($application->photos)->map(fn($photo) => Storage::url($photo))->toArray();
+        @endphp
         <div class="row g-3">
-            @foreach($application->photos as $photo)
+            @foreach($application->photos as $index => $photo)
             <div class="col-md-3">
-                <div class="border rounded overflow-hidden shadow-sm h-100 cursor-pointer" onclick="openImageModal('{{ Storage::url($photo) }}')">
+                <div class="border rounded overflow-hidden shadow-sm h-100 cursor-pointer" onclick="openImageModal({{ $index }})">
                     <img src="{{ Storage::url($photo) }}" class="img-fluid w-100" style="height: 250px; object-fit: cover; cursor: pointer;" alt="Application Photo">
                 </div>
             </div>
@@ -137,18 +140,61 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content bg-transparent border-0">
             <div class="modal-body p-0 text-center position-relative">
+                <button id="prevBtn" class="btn btn-link text-white position-absolute top-50 start-0 translate-middle-y fs-1" style="z-index: 1060; left: -50px !important;" onclick="prevImage()"><i class="fas fa-chevron-left"></i></button>
                 <img src="" id="modalImage" class="img-fluid rounded shadow-lg" style="max-height: 90vh;">
-                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button id="nextBtn" class="btn btn-link text-white position-absolute top-50 end-0 translate-middle-y fs-1" style="z-index: 1060; right: -50px !important;" onclick="nextImage()"><i class="fas fa-chevron-right"></i></button>
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="z-index: 1060;"></button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function openImageModal(src) {
-        document.getElementById('modalImage').src = src;
-        var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
-        myModal.show();
+    const photoUrls = @json($photoUrls);
+    let currentImageIndex = 0;
+    let imageModal;
+
+    function openImageModal(index) {
+        currentImageIndex = index;
+        updateModalImage();
+        if (!imageModal) {
+            imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        }
+        imageModal.show();
     }
+
+    function updateModalImage() {
+        document.getElementById('modalImage').src = photoUrls[currentImageIndex];
+        
+        // Toggle visibility of navigation buttons
+        document.getElementById('prevBtn').style.visibility = currentImageIndex === 0 ? 'hidden' : 'visible';
+        document.getElementById('nextBtn').style.visibility = currentImageIndex === photoUrls.length - 1 ? 'hidden' : 'visible';
+    }
+
+    function nextImage() {
+        if (currentImageIndex < photoUrls.length - 1) {
+            currentImageIndex++;
+            updateModalImage();
+        }
+    }
+
+    function prevImage() {
+        if (currentImageIndex > 0) {
+            currentImageIndex--;
+            updateModalImage();
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+        const modal = document.getElementById('imageModal');
+        if (modal.classList.contains('show')) {
+            if (event.key === 'ArrowRight') {
+                nextImage();
+            } else if (event.key === 'ArrowLeft') {
+                prevImage();
+            }
+        }
+    });
 </script>
 @endpush
