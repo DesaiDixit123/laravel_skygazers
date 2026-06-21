@@ -10,6 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; }
         .sidebar { 
@@ -165,6 +167,17 @@
                     </div>
                 @endif
                 
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                
                 @yield('content')
             </div>
         </div>
@@ -173,6 +186,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/admin-selection.js') }}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    <!-- Toastify JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Sidebar Toggle Logic
@@ -228,6 +243,69 @@
                 if (shouldCheck) autoDismissAlerts();
             });
             observer.observe(document.body, { childList: true, subtree: true });
+
+            // Global AJAX form submission for toggle status
+            document.addEventListener('submit', function(e) {
+                if (e.target.tagName === 'FORM' && e.target.action.includes('toggle-status')) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const btn = form.querySelector('button[type="submit"]');
+                    if(btn) btn.disabled = true;
+                    
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(btn) btn.disabled = false;
+                        if (data.success) {
+                            if (btn) {
+                                if (data.is_active) {
+                                    btn.classList.remove('btn-secondary');
+                                    btn.classList.add('btn-success');
+                                    btn.textContent = 'Active';
+                                } else {
+                                    btn.classList.remove('btn-success');
+                                    btn.classList.add('btn-secondary');
+                                    btn.textContent = 'Inactive';
+                                }
+                            }
+                            
+                            if (typeof Toastify !== 'undefined') {
+                                Toastify({
+                                    text: "Status updated successfully",
+                                    duration: 3000,
+                                    gravity: "top",
+                                    position: "right",
+                                    style: {
+                                        background: "#198754"
+                                    }
+                                }).showToast();
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        if(btn) btn.disabled = false;
+                        console.error('Error toggling status:', err);
+                        if (typeof Toastify !== 'undefined') {
+                            Toastify({
+                                text: "An error occurred",
+                                duration: 3000,
+                                gravity: "top",
+                                position: "right",
+                                style: {
+                                    background: "#dc3545"
+                                }
+                            }).showToast();
+                        }
+                    });
+                }
+            });
         });
     </script>
     @stack('scripts')
